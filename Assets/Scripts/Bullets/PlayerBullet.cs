@@ -8,7 +8,8 @@ public class PlayerBullet : Bullet
         {
             AI ai = collision.gameObject.GetComponent<AI>();
             ai.TakeDamage(1);
-            Destroy(gameObject);
+            if (!ai.IsShrunk)
+                Destroy(gameObject);
         }
     }
 }

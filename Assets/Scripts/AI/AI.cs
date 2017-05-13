@@ -41,20 +41,6 @@ public class AI : MonoBehaviour
     {
         m_DamageTimer = Mathf.Max(m_DamageTimer - Time.deltaTime, 0.0f);
 
-        if (m_NavMeshAgent != null)
-        {
-            if (m_NavMeshAgent.isOnOffMeshLink)
-            {
-                m_NavMeshAgent.autoTraverseOffMeshLink = true;
-                m_NavMeshAgent.speed = m_NavMeshSpeed * 0.5f;
-            }
-            else
-            {
-                m_NavMeshAgent.autoTraverseOffMeshLink = false;
-                m_NavMeshAgent.speed = m_NavMeshSpeed;
-            }
-        }
-
         DoUpdate();
     }
     protected virtual void DoUpdate() { }
