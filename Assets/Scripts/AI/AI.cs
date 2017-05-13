@@ -45,6 +45,15 @@ public class AI : MonoBehaviour
         GUI.DrawTexture(position, ResourceManager.GetTexture("red"));
     }
 
+    void OnTriggerEnter(Collider collider)
+    {
+        UnshrinkExplosion unshrinkExplosion = collider.GetComponent<UnshrinkExplosion>();
+        if (unshrinkExplosion != null && m_Shrunk)
+        {
+            unshrinkExplosion.OnAIEnter(this);
+        }
+    }
+
     public void TakeDamage(int damage)
     {
         if (m_Shrunk)
@@ -54,7 +63,6 @@ public class AI : MonoBehaviour
         if (m_CurrentHp <= 0)
         {
             m_CurrentHp = 0;
-            m_Shrunk = true;
             Shrink();
         }
     }
@@ -66,6 +74,7 @@ public class AI : MonoBehaviour
 
     protected virtual void Shrink()
     {
+        m_Shrunk = true;
         StartCoroutine(ShrinkAnim());
     }
 
@@ -82,6 +91,28 @@ public class AI : MonoBehaviour
             timer -= Time.fixedDeltaTime;
 
             m_NavMeshAgent.speed = scale * navMeshSpeed;
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+    public void Unshrink()
+    {
+        m_CurrentHp = Hp;
+        m_Shrunk = false;
+        StartCoroutine(UnshrinkAnim());
+    }
+
+    private IEnumerator UnshrinkAnim()
+    {
+        float timer = ShrinkSpeed;
+        float navMeshSpeed = m_NavMeshAgent.speed;
+        while (timer > 0)
+        {
+            float scale = Mathf.Lerp(1.0f, ShrinkRatio, timer / ShrinkSpeed);
+            transform.localScale = new Vector3(scale, scale, scale);
+            timer -= Time.fixedDeltaTime;
+
+            m_NavMeshAgent.speed = navMeshSpeed / scale;
             yield return new WaitForFixedUpdate();
         }
     }

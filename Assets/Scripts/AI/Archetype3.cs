@@ -48,7 +48,7 @@ public class Archetype3 : AI
 
     private void Spit()
     {
-        m_NavMeshAgent.destination = m_Player.position;
+        transform.rotation = Quaternion.LookRotation((m_Player.position - transform.position).normalized);
         m_NavMeshAgent.speed = 0.0f;
 
         if (m_FireTimer > 0)
