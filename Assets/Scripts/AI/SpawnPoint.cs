@@ -7,6 +7,7 @@ public class SpawnPoint : MonoBehaviour
     public float Archetype3SpawnRate = 0.33f;
 
     public float SpawnCooldown = 5.0f;
+    public bool SpawnOnlyOne;
 
     private float m_SpawnTimer;
 
@@ -37,7 +38,7 @@ public class SpawnPoint : MonoBehaviour
         {
             archetypePrefab = ResourceManager.GetPrefab("Archetype1");
         }
-        else if (random < Archetype2SpawnRate)
+        else if (random < (Archetype1SpawnRate + Archetype2SpawnRate))
         {
             archetypePrefab = ResourceManager.GetPrefab("Archetype2");
         }
@@ -50,5 +51,7 @@ public class SpawnPoint : MonoBehaviour
         Instantiate(archetypePrefab, transform.position, Quaternion.LookRotation(direction));
 
         m_SpawnTimer = SpawnCooldown;
+        if (SpawnOnlyOne)
+            enabled = false;
     }
 }
