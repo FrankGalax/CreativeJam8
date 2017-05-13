@@ -27,6 +27,9 @@ public class Archetype2 : AI
 
     protected override void DoUpdate()
     {
+        if (IsShrunk)
+            return;
+
         switch (m_State)
         {
             case State.Fly:
