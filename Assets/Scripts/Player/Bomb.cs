@@ -25,7 +25,7 @@ public class Bomb : MonoBehaviour
     {
         m_Timer += Time.deltaTime;
 
-        float scale = m_Timer * MaxRadius;
+        float scale = m_Timer / ExpandTime * MaxRadius;
         transform.localScale = new Vector3(scale, scale, scale);
 
         if (m_Timer > ExpandTime)
