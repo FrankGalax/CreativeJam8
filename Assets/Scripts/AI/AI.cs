@@ -12,6 +12,7 @@ public class AI : MonoBehaviour
     public int GoldDamage = 5;
 
     protected NavMeshAgent m_NavMeshAgent;
+    protected float m_NavMeshSpeed;
     protected int m_CurrentHp;
     protected bool m_IsUpdatingSize;
     protected bool m_Shrunk;
@@ -30,6 +31,7 @@ public class AI : MonoBehaviour
         m_CurrentHp = Hp;
         m_Shrunk = false;
         m_IsUpdatingSize = false;
+        m_NavMeshSpeed = m_NavMeshAgent.speed;
 
         DoStart();
     }
@@ -38,6 +40,17 @@ public class AI : MonoBehaviour
     void Update()
     {
         m_DamageTimer = Mathf.Max(m_DamageTimer - Time.deltaTime, 0.0f);
+
+        if (m_NavMeshAgent.isOnOffMeshLink)
+        {
+            m_NavMeshAgent.autoTraverseOffMeshLink = true;
+            m_NavMeshAgent.speed = m_NavMeshSpeed * 0.5f;
+        }
+        else
+        {
+            m_NavMeshAgent.autoTraverseOffMeshLink = false;
+            m_NavMeshAgent.speed = m_NavMeshSpeed;
+        }
 
         DoUpdate();
     }

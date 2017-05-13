@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public float FireCooldown = 0.25f;
     public bool PS4;
 
+    public bool IsInteracting { get; private set; }
     private Rigidbody m_Rigidbody;
     private float m_FireTimer;
 
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         UpdateShooting();
+        UpdateInteractions();
     }
 
     private void UpdatePosition()
@@ -74,6 +76,11 @@ public class PlayerController : MonoBehaviour
         Vector3 gunPosition = transform.position + transform.TransformVector(GunOffset);
         Instantiate(ResourceManager.GetPrefab("Bullet"), gunPosition, transform.rotation);
         m_FireTimer = FireCooldown;
+    }
+
+    private void UpdateInteractions()
+    {
+        IsInteracting = PS4 ? Input.GetButtonDown("Fire2") : Input.GetButtonDown("Fire1");
     }
 
     void OnCollisionEnter(Collision collision)
