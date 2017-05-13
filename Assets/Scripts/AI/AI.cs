@@ -31,7 +31,7 @@ public class AI : MonoBehaviour
         m_CurrentHp = Hp;
         m_Shrunk = false;
         m_IsUpdatingSize = false;
-        m_NavMeshSpeed = m_NavMeshAgent.speed;
+        m_NavMeshSpeed = m_NavMeshAgent != null ? m_NavMeshAgent.speed : 0.0f;
 
         DoStart();
     }
@@ -41,15 +41,18 @@ public class AI : MonoBehaviour
     {
         m_DamageTimer = Mathf.Max(m_DamageTimer - Time.deltaTime, 0.0f);
 
-        if (m_NavMeshAgent.isOnOffMeshLink)
+        if (m_NavMeshAgent != null)
         {
-            m_NavMeshAgent.autoTraverseOffMeshLink = true;
-            m_NavMeshAgent.speed = m_NavMeshSpeed * 0.5f;
-        }
-        else
-        {
-            m_NavMeshAgent.autoTraverseOffMeshLink = false;
-            m_NavMeshAgent.speed = m_NavMeshSpeed;
+            if (m_NavMeshAgent.isOnOffMeshLink)
+            {
+                m_NavMeshAgent.autoTraverseOffMeshLink = true;
+                m_NavMeshAgent.speed = m_NavMeshSpeed * 0.5f;
+            }
+            else
+            {
+                m_NavMeshAgent.autoTraverseOffMeshLink = false;
+                m_NavMeshAgent.speed = m_NavMeshSpeed;
+            }
         }
 
         DoUpdate();
@@ -117,14 +120,16 @@ public class AI : MonoBehaviour
     private IEnumerator ShrinkAnim()
     {
         float timer = ShrinkSpeed;
-        float navMeshSpeed = m_NavMeshAgent.speed;
         while (timer > 0)
         {
             float scale = Mathf.Lerp(ShrinkRatio, 1.0f, timer / ShrinkSpeed);
             transform.localScale = new Vector3(scale, scale, scale);
             timer -= Time.fixedDeltaTime;
 
-            m_NavMeshAgent.speed = scale * navMeshSpeed;
+            if (m_NavMeshAgent != null)
+            {
+                m_NavMeshAgent.speed = scale * m_NavMeshSpeed;
+            }
             yield return new WaitForFixedUpdate();
         }
         m_Shrunk = true;
@@ -141,14 +146,17 @@ public class AI : MonoBehaviour
     private IEnumerator UnshrinkAnim()
     {
         float timer = ShrinkSpeed;
-        float navMeshSpeed = m_NavMeshAgent.speed;
+        float navMeshSpeed = m_NavMeshAgent != null ? m_NavMeshAgent.speed : 0.0f;
         while (timer > 0)
         {
             float scale = Mathf.Lerp(1.0f, ShrinkRatio, timer / ShrinkSpeed);
             transform.localScale = new Vector3(scale, scale, scale);
             timer -= Time.fixedDeltaTime;
 
-            m_NavMeshAgent.speed = navMeshSpeed / scale;
+            if (m_NavMeshAgent != null)
+            {
+                m_NavMeshAgent.speed = navMeshSpeed / scale;
+            }
             yield return new WaitForFixedUpdate();
         }
         m_Shrunk = false;

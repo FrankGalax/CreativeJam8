@@ -82,6 +82,7 @@ public class Archetype2 : AI
         {
             m_State = State.Drop;
             m_Timer = DropTime;
+            GetComponent<CapsuleCollider>().enabled = false;
         }
     }
 
@@ -98,6 +99,7 @@ public class Archetype2 : AI
         {
             m_State = State.OnGround;
             m_Timer = OnGroundStunTime;
+            GetComponent<CapsuleCollider>().enabled = true;
         }
     }
 
@@ -108,6 +110,7 @@ public class Archetype2 : AI
         {
             m_State = State.Lift;
             m_Timer = LiftTime;
+            GetComponent<CapsuleCollider>().enabled = false;
         }
     }
 
@@ -123,6 +126,7 @@ public class Archetype2 : AI
         else
         {
             m_State = State.Fly;
+            GetComponent<CapsuleCollider>().enabled = true;
         }
     }
 }
