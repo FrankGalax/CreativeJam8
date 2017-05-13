@@ -28,6 +28,11 @@ public class PlayerController : MonoBehaviour
         UpdateInteractions();
     }
 
+    public void ApplyPowerup(int id)
+    {
+
+    }
+
     private void UpdatePosition()
     {
         float horizontal = Input.GetAxis("Horizontal");
