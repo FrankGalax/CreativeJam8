@@ -2,8 +2,9 @@
 
 public class PowerUpSpawnpoint : MonoBehaviour
 {
-    public float Powerup1SpawnRate = 0.5f;
-    public float Powerup2SpawnRate = 0.5f;
+    public float Powerup1SpawnRate = 0.33f;
+    public float Powerup2SpawnRate = 0.33f;
+    public float Powerup3SpawnRate = 0.33f;
     public float SpawnCooldown = 10.0f;
 
     private float m_SpawnTimer;
@@ -25,17 +26,21 @@ public class PowerUpSpawnpoint : MonoBehaviour
             return;
 
         float random = UnityEngine.Random.value;
-        GameObject archetypePrefab = null;
+        GameObject powerupPrefab = null;
         if (random < Powerup1SpawnRate)
         {
-            archetypePrefab = ResourceManager.GetPrefab("Powerup1");
+            powerupPrefab = ResourceManager.GetPrefab("Powerup1");
+        }
+        else if (random < (Powerup1SpawnRate + Powerup2SpawnRate))
+        {
+            powerupPrefab = ResourceManager.GetPrefab("Powerup2");
         }
         else
         {
-            archetypePrefab = ResourceManager.GetPrefab("Powerup2");
+            powerupPrefab = ResourceManager.GetPrefab("Powerup3");
         }
 
-        Instantiate(archetypePrefab, transform.position, Quaternion.identity).GetComponent<Powerup>().Spawnpoint = this;
+        Instantiate(powerupPrefab, transform.position, Quaternion.identity).GetComponent<Powerup>().Spawnpoint = this;
 
         m_SpawnTimer = SpawnCooldown;
         enabled = false;

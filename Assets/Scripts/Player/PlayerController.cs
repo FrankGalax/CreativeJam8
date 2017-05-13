@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float ShieldTime = 5.0f;
     public float DoubleGunTime = 5.0f;
     public float BombExpandTime = 2.0f;
+    public int GoldPickupAmount = 1;
 
     public bool IsInteracting { get; private set; }
     private Rigidbody m_Rigidbody;
@@ -44,10 +45,14 @@ public class PlayerController : MonoBehaviour
             if (!m_Shielded)
                 StartCoroutine(Shield());
         }
-        else
+        else if (id == 1)
         {
             if (!m_DoubleGun)
                 StartCoroutine(DoubleGun());
+        }
+        else if (id == 2)
+        {
+            GetComponent<Player>().Gold += GoldPickupAmount;
         }
     }
 
