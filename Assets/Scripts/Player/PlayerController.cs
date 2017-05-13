@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -6,14 +7,20 @@ public class PlayerController : MonoBehaviour
     public Vector3 GunOffset;
     public float FireCooldown = 0.25f;
     public bool PS4;
+    public float ShieldTime = 5.0f;
+    public float DoubleGunTime = 5.0f;
 
     public bool IsInteracting { get; private set; }
     private Rigidbody m_Rigidbody;
     private float m_FireTimer;
+    private bool m_Shielded;
+    private bool m_DoubleGun;
 
     void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+        m_Shielded = false;
+        m_DoubleGun = false;
     }
 
     void FixedUpdate()
@@ -30,7 +37,37 @@ public class PlayerController : MonoBehaviour
 
     public void ApplyPowerup(int id)
     {
+        if (id == 0)
+        {
+            if (!m_Shielded)
+                StartCoroutine(Shield());
+        }
+        else
+        {
+            if (!m_DoubleGun)
+                StartCoroutine(DoubleGun());
+        }
+    }
 
+    private IEnumerator Shield()
+    {
+        Transform shield = transform.Find("Shield");
+        shield.gameObject.SetActive(true);
+        m_Shielded = true;
+
+        yield return new WaitForSeconds(ShieldTime);
+
+        shield.gameObject.SetActive(false);
+        m_Shielded = false;
+    }
+
+    private IEnumerator DoubleGun()
+    {
+        m_DoubleGun = true;
+
+        yield return new WaitForSeconds(DoubleGunTime);
+
+        m_DoubleGun = false;
     }
 
     private void UpdatePosition()
@@ -79,7 +116,21 @@ public class PlayerController : MonoBehaviour
             return;
 
         Vector3 gunPosition = transform.position + transform.TransformVector(GunOffset);
-        Instantiate(ResourceManager.GetPrefab("Bullet"), gunPosition, transform.rotation);
+
+        if (m_DoubleGun)
+        {
+            Vector3 forward = transform.forward;
+            Quaternion rot = Quaternion.AngleAxis(10, Vector3.up);
+            Quaternion invRot = Quaternion.AngleAxis(-10, Vector3.up);
+
+            Instantiate(ResourceManager.GetPrefab("Bullet"), gunPosition, Quaternion.LookRotation(rot * forward));
+            Instantiate(ResourceManager.GetPrefab("Bullet"), gunPosition, Quaternion.LookRotation(invRot * forward));
+        }
+        else
+        {
+            Instantiate(ResourceManager.GetPrefab("Bullet"), gunPosition, transform.rotation);
+        }
+
         m_FireTimer = FireCooldown;
     }
 

@@ -9,7 +9,7 @@ public class Powerup : MonoBehaviour
 
     private float m_Timer;
 
-    void Update()
+    void FixedUpdate()
     {
         Transform graphics = transform.Find("Graphics");
 
@@ -19,7 +19,6 @@ public class Powerup : MonoBehaviour
         transform.position = position;
 
         float angle = m_Timer * RotationSpeed * Time.deltaTime;
-        Debug.Log(angle);
         Vector3 direction = new Vector3(Mathf.Cos(angle), 0.0f, Mathf.Sin(angle));
         transform.rotation = Quaternion.LookRotation(direction);
     }
@@ -30,6 +29,7 @@ public class Powerup : MonoBehaviour
         {
             collider.GetComponent<PlayerController>().ApplyPowerup(Id);
             Spawnpoint.enabled = true;
+            Destroy(gameObject);
         }
     }
 }
