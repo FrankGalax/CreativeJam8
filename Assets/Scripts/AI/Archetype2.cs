@@ -70,6 +70,7 @@ public class Archetype2 : AI
         newPosition += Speed * playerDirectionNormalized * Time.deltaTime;
 
         transform.position = newPosition;
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(playerDirectionNormalized), 6.0f * Time.deltaTime);
 
         if (playerDirection.magnitude < DropRadius)
         {
