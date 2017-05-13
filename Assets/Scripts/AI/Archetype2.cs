@@ -30,7 +30,12 @@ public class Archetype2 : AI
     protected override void DoUpdate()
     {
         if (IsShrunk)
+        {
+            Vector3 position = transform.position;
+            position.y = 0.0f;
+            transform.position = position;
             return;
+        }
 
         switch (m_State)
         {
@@ -67,8 +72,14 @@ public class Archetype2 : AI
 
         if (playerDirection.magnitude < DropRadius)
         {
-            m_State = State.WaitInAir;
-            m_Timer = InAirStunTime;
+            RaycastHit hit;
+            int layerMask = 1 << LayerMask.NameToLayer("Ground");
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, 1000.0f, layerMask))
+            {
+                Debug.Log(hit.point);
+                m_State = State.WaitInAir;
+                m_Timer = InAirStunTime;
+            }
         }
     }
 
