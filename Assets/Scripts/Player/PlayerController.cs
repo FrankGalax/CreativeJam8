@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public float DoubleGunTime = 5.0f;
     public float BombExpandTime = 2.0f;
     public int GoldPickupAmount = 1;
+    public float CameraShakeTime = 1.0f;
+    public float CameraShakeStrength = 10.0f;
 
     public bool IsInteracting { get; private set; }
     private Rigidbody m_Rigidbody;
@@ -75,6 +77,17 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(DoubleGunTime);
 
         m_DoubleGun = false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        GetComponent<Player>().RemoveGold(damage);
+        StartCoroutine(CameraShake());
+    }
+
+    private IEnumerator CameraShake()
+    {
+        yield return null;
     }
 
     private void UpdatePosition()

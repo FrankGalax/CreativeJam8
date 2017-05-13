@@ -70,7 +70,7 @@ public class AI : MonoBehaviour
         {
             if (!m_Shrunk && m_DamageTimer <= 0)
             {
-                collision.gameObject.GetComponent<Player>().RemoveGold(GoldDamage);
+                collision.gameObject.GetComponent<PlayerController>().TakeDamage(GoldDamage);
                 m_DamageTimer = DamageCooldown;
             }
         }
