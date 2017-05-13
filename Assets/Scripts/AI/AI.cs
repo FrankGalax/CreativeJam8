@@ -8,11 +8,15 @@ public class AI : MonoBehaviour
     public float ShrinkSpeed = 0.5f;
     public float ShrinkRatio = 0.25f;
     public int GoldReward = 10;
+    public float DamageCooldown;
+    public int GoldDamage = 5;
 
     protected NavMeshAgent m_NavMeshAgent;
     protected int m_CurrentHp;
     protected bool m_Shrunk;
     protected Transform m_Player;
+
+    private float m_DamageTimer;
 
     void Awake()
     {
@@ -31,6 +35,8 @@ public class AI : MonoBehaviour
 
     void Update()
     {
+        m_DamageTimer = Mathf.Max(m_DamageTimer - Time.deltaTime, 0.0f);
+
         DoUpdate();
     }
     protected virtual void DoUpdate() { }
@@ -51,6 +57,18 @@ public class AI : MonoBehaviour
         if (unshrinkExplosion != null && m_Shrunk)
         {
             unshrinkExplosion.OnAIEnter(this);
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (Helpers.CheckObjectTag(collision.gameObject, "Player"))
+        {
+            if (!m_Shrunk && m_DamageTimer <= 0)
+            {
+                collision.gameObject.GetComponent<Player>().RemoveGold(GoldDamage);
+                m_DamageTimer = DamageCooldown;
+            }
         }
     }
 
