@@ -2,7 +2,9 @@
 
 public class Archetype3 : AI
 {
-    public float Range = 5.0f;
+    public float Range = 2.5f;
+    public float FireCooldown = 3.0f;
+    public Vector3 GunOffset;
 
     enum State
     {
@@ -11,6 +13,7 @@ public class Archetype3 : AI
     }
     private State m_State;
     private float m_NavMeshSpeed;
+    private float m_FireTimer;
 
     protected override void DoStart()
     {
@@ -39,6 +42,7 @@ public class Archetype3 : AI
         {
             m_State = State.Spit;
             m_NavMeshSpeed = m_NavMeshAgent.speed;
+            m_FireTimer = FireCooldown;
         }
     }
 
@@ -46,6 +50,17 @@ public class Archetype3 : AI
     {
         m_NavMeshAgent.destination = m_Player.position;
         m_NavMeshAgent.speed = 0.0f;
+
+        if (m_FireTimer > 0)
+        {
+            m_FireTimer -= Time.deltaTime;
+        }
+        else
+        {
+            Vector3 position = transform.position + transform.TransformVector(GunOffset);
+            GameObject bullet = Instantiate(ResourceManager.GetPrefab("Archetype3Bullet"), position, transform.rotation);
+            m_FireTimer = FireCooldown;
+        }
 
         float distanceSq = (m_Player.position - transform.position).sqrMagnitude;
         if (distanceSq > Range * Range)
