@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
     public float Speed = 4.0f;
     public Vector3 GunOffset;
     public float FireCooldown = 0.25f;
+    public bool PS4;
 
     private Rigidbody m_Rigidbody;
     private float m_FireTimer;
@@ -43,8 +44,8 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateRotation()
     {
-        float rightHorizontal = Input.GetAxis("RightHorizontal");
-        float rightVertical = Input.GetAxis("RightVertical");
+        float rightHorizontal = PS4 ? Input.GetAxis("RightHorizontalPS4") : Input.GetAxis("RightHorizontal");
+        float rightVertical = PS4 ? Input.GetAxis("RightVerticalPS4") : Input.GetAxis("RightVertical");
 
         if (rightHorizontal == 0 && rightVertical == 0)
         {
@@ -61,8 +62,8 @@ public class PlayerController : MonoBehaviour
     {
         m_FireTimer = Mathf.Max(m_FireTimer - Time.deltaTime, 0.0f);
 
-        float rightHorizontal = Input.GetAxis("RightHorizontal");
-        float rightVertical = Input.GetAxis("RightVertical");
+        float rightHorizontal = PS4 ? Input.GetAxis("RightHorizontalPS4") : Input.GetAxis("RightHorizontal");
+        float rightVertical = PS4 ? Input.GetAxis("RightVerticalPS4") : Input.GetAxis("RightVertical");
 
         if (Mathf.Abs(rightHorizontal) <= 0.5f && Mathf.Abs(rightVertical) <= 0.5f)
             return;

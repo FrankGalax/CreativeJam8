@@ -12,6 +12,7 @@ public class AI : MonoBehaviour
     protected NavMeshAgent m_NavMeshAgent;
     protected int m_CurrentHp;
     protected bool m_Shrunk;
+    protected Transform m_Player;
 
     void Awake()
     {
@@ -20,6 +21,7 @@ public class AI : MonoBehaviour
 
     void Start()
     {
+        m_Player = Helpers.GetObjectWithTag("Player").transform;
         m_CurrentHp = Hp;
         m_Shrunk = false;
 
