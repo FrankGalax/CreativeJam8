@@ -30,7 +30,13 @@ public class Archetype2 : AI
     protected override void DoUpdate()
     {
         if (IsShrunk)
+        {
+            Vector3 position = transform.position;
+            position.y = 0.0f;
+            transform.position = position;
+            GetComponent<CapsuleCollider>().enabled = true;
             return;
+        }
 
         switch (m_State)
         {
@@ -67,8 +73,16 @@ public class Archetype2 : AI
 
         if (playerDirection.magnitude < DropRadius)
         {
-            m_State = State.WaitInAir;
-            m_Timer = InAirStunTime;
+            RaycastHit hit;
+            int layerMask = 1 << LayerMask.NameToLayer("Ground");
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, 1000.0f, layerMask))
+            {
+                if (Helpers.CheckObjectTag(hit.collider.gameObject, "Ground"))
+                {
+                    m_State = State.WaitInAir;
+                    m_Timer = InAirStunTime;
+                }
+            }
         }
     }
 
@@ -82,6 +96,7 @@ public class Archetype2 : AI
         {
             m_State = State.Drop;
             m_Timer = DropTime;
+            GetComponent<CapsuleCollider>().enabled = false;
         }
     }
 
@@ -98,6 +113,7 @@ public class Archetype2 : AI
         {
             m_State = State.OnGround;
             m_Timer = OnGroundStunTime;
+            GetComponent<CapsuleCollider>().enabled = true;
         }
     }
 
@@ -108,6 +124,7 @@ public class Archetype2 : AI
         {
             m_State = State.Lift;
             m_Timer = LiftTime;
+            GetComponent<CapsuleCollider>().enabled = false;
         }
     }
 
@@ -123,6 +140,7 @@ public class Archetype2 : AI
         else
         {
             m_State = State.Fly;
+            GetComponent<CapsuleCollider>().enabled = true;
         }
     }
 }
