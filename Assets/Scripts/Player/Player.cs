@@ -2,11 +2,13 @@
 
 public class Player : MonoBehaviour
 {
-    public int Gold;
+    public int Gold { get; set; }
+    public int Bombs { get; set; }
 
     void Start()
     {
         Gold = 0;
+        Bombs = 0;
     }
 
     public void RemoveGold(int gold)

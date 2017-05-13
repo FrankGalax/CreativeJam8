@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public bool PS4;
     public float ShieldTime = 5.0f;
     public float DoubleGunTime = 5.0f;
+    public float BombExpandTime = 2.0f;
 
     public bool IsInteracting { get; private set; }
     private Rigidbody m_Rigidbody;
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
     {
         UpdateShooting();
         UpdateInteractions();
+        UpdateActions();
     }
 
     public void ApplyPowerup(int id)
@@ -137,6 +139,19 @@ public class PlayerController : MonoBehaviour
     private void UpdateInteractions()
     {
         IsInteracting = PS4 ? Input.GetButtonDown("Fire2") : Input.GetButtonDown("Fire1");
+    }
+
+    private void UpdateActions()
+    {
+        if (PS4 ? Input.GetButtonDown("Fire3") : Input.GetButtonDown("Fire2"))
+        {
+            Player player = GetComponent<Player>();
+            if (player.Bombs > 0)
+            {
+                player.Bombs--;
+                Instantiate(ResourceManager.GetPrefab("Bomb"), transform.position, Quaternion.identity);
+            }
+        }
     }
 
     void OnCollisionEnter(Collision collision)

@@ -43,7 +43,7 @@ public class GameUI : MonoBehaviour
         }
         else
         {
-            m_GoldText.text = "Gold : " + m_Player.Gold.ToString();
+            m_GoldText.text = "Gold : " + m_Player.Gold + ", Bombs : " + m_Player.Bombs;
 
             bool isCooldown = WaveManager.Instance.IsCooldown;
             if (isCooldown)
