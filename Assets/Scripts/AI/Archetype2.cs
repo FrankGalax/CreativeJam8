@@ -34,6 +34,7 @@ public class Archetype2 : AI
             Vector3 position = transform.position;
             position.y = 0.0f;
             transform.position = position;
+            GetComponent<CapsuleCollider>().enabled = true;
             return;
         }
 
@@ -76,9 +77,11 @@ public class Archetype2 : AI
             int layerMask = 1 << LayerMask.NameToLayer("Ground");
             if (Physics.Raycast(transform.position, Vector3.down, out hit, 1000.0f, layerMask))
             {
-                Debug.Log(hit.point);
-                m_State = State.WaitInAir;
-                m_Timer = InAirStunTime;
+                if (Helpers.CheckObjectTag(hit.collider.gameObject, "Ground"))
+                {
+                    m_State = State.WaitInAir;
+                    m_Timer = InAirStunTime;
+                }
             }
         }
     }
