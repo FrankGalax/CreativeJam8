@@ -13,6 +13,7 @@ public class AI : MonoBehaviour
 
     protected NavMeshAgent m_NavMeshAgent;
     protected int m_CurrentHp;
+    protected bool m_IsUpdatingSize;
     protected bool m_Shrunk;
     protected Transform m_Player;
 
@@ -28,6 +29,7 @@ public class AI : MonoBehaviour
         m_Player = Helpers.GetObjectWithTag("Player").transform;
         m_CurrentHp = Hp;
         m_Shrunk = false;
+        m_IsUpdatingSize = false;
 
         DoStart();
     }
@@ -74,7 +76,7 @@ public class AI : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (m_Shrunk)
+        if (m_Shrunk || m_IsUpdatingSize)
             return;
 
         m_CurrentHp -= damage;
@@ -93,7 +95,7 @@ public class AI : MonoBehaviour
 
     protected virtual void Shrink()
     {
-        m_Shrunk = true;
+        m_IsUpdatingSize = true;
         StartCoroutine(ShrinkAnim());
     }
 
@@ -112,12 +114,14 @@ public class AI : MonoBehaviour
             m_NavMeshAgent.speed = scale * navMeshSpeed;
             yield return new WaitForFixedUpdate();
         }
+        m_Shrunk = true;
+        m_IsUpdatingSize = false;
     }
 
     public void Unshrink()
     {
         m_CurrentHp = Hp;
-        m_Shrunk = false;
+        m_IsUpdatingSize = true;
         StartCoroutine(UnshrinkAnim());
     }
 
@@ -134,5 +138,7 @@ public class AI : MonoBehaviour
             m_NavMeshAgent.speed = navMeshSpeed / scale;
             yield return new WaitForFixedUpdate();
         }
+        m_Shrunk = false;
+        m_IsUpdatingSize = false;
     }
 }

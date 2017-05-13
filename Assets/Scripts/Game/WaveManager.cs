@@ -55,7 +55,8 @@ public class WaveManager : GameSingleton<WaveManager>
             m_State = State.Play;
             m_AIKills = 0;
             m_AISpawned = 0;
-            m_Waves[m_CurrentWave].SpawnPoints.ForEach(p => p.enabled = true);
+            if (m_Waves[m_CurrentWave].SpawnPoints.Count > 0)
+                m_Waves[m_CurrentWave].SpawnPoints.ForEach(p => p.enabled = true);
         }
     }
 

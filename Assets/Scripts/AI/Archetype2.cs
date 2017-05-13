@@ -8,6 +8,8 @@ public class Archetype2 : AI
     public float DropRadius = 1.0f;
     public float DropTime = 0.25f;
     public float LiftTime = 1.0f;
+    public float InAirStunTime = 0.5f;
+    public float OnGroundStunTime = 4.0f;
 
     enum State
     {
@@ -66,7 +68,7 @@ public class Archetype2 : AI
         if (playerDirection.magnitude < DropRadius)
         {
             m_State = State.WaitInAir;
-            m_Timer = 1;
+            m_Timer = InAirStunTime;
         }
     }
 
@@ -95,7 +97,7 @@ public class Archetype2 : AI
         else
         {
             m_State = State.OnGround;
-            m_Timer = 4;
+            m_Timer = OnGroundStunTime;
         }
     }
 
