@@ -38,6 +38,9 @@ public class UnlockInteraction : MonoBehaviour
 
     void Update()
     {
+        if (!WaveManager.Instance.IsCooldown)
+            return;
+
         if (m_PlayerInside && m_PlayerController.IsInteracting && Barrier != null && !Barrier.Unlocked)
         {
             Player player = m_PlayerController.GetComponent<Player>();

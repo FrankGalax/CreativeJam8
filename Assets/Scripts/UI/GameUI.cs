@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
@@ -70,5 +71,12 @@ public class GameUI : MonoBehaviour
     {
         m_GoldPanel.gameObject.SetActive(false);
         m_WavePanel.gameObject.SetActive(false);
+        m_EndPanel.gameObject.SetActive(true);
+        m_EndPanel.transform.Find("GoldText").GetComponent<Text>().text = "You shrunk'em up good and still have " + m_Player.Gold + " gold!";
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("mainmenu");
     }
 }

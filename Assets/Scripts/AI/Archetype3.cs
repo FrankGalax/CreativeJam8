@@ -12,7 +12,6 @@ public class Archetype3 : AI
         Spit
     }
     private State m_State;
-    private float m_NavMeshSpeed;
     private float m_FireTimer;
 
     protected override void DoStart()
