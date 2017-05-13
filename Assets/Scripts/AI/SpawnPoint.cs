@@ -18,7 +18,7 @@ public class SpawnPoint : MonoBehaviour
     
     void Start()
     {
-        m_SpawnTimer = SpawnCooldown;
+        m_SpawnTimer = 0;
     }
 
     void Update()
@@ -30,6 +30,9 @@ public class SpawnPoint : MonoBehaviour
     {
         m_SpawnTimer -= Time.deltaTime;
         if (m_SpawnTimer > 0)
+            return;
+
+        if (!WaveManager.Instance.RequestSpawn())
             return;
 
         float random = UnityEngine.Random.value;

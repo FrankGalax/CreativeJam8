@@ -58,7 +58,7 @@ public class Archetype3 : AI
         else
         {
             Vector3 position = transform.position + transform.TransformVector(GunOffset);
-            GameObject bullet = Instantiate(ResourceManager.GetPrefab("Archetype3Bullet"), position, transform.rotation);
+            Instantiate(ResourceManager.GetPrefab("Archetype3Bullet"), position, transform.rotation);
             m_FireTimer = FireCooldown;
         }
 

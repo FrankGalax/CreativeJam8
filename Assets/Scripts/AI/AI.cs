@@ -87,6 +87,7 @@ public class AI : MonoBehaviour
 
     public virtual void Die()
     {
+        WaveManager.Instance.AddKill();
         Destroy(gameObject);
     }
 
