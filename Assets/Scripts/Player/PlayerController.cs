@@ -31,7 +31,10 @@ public class PlayerController : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
 
         if (horizontal == 0 && vertical == 0)
+        {
+            m_Rigidbody.velocity = Vector3.zero;
             return;
+        }
 
         Vector3 movement = (horizontal * Vector3.right + vertical * Vector3.forward) * Speed * Time.deltaTime;
 
@@ -44,7 +47,10 @@ public class PlayerController : MonoBehaviour
         float rightVertical = Input.GetAxis("RightVertical");
 
         if (rightHorizontal == 0 && rightVertical == 0)
+        {
+            m_Rigidbody.angularVelocity = Vector3.zero;
             return;
+        }
 
         Vector3 direction = (rightHorizontal * Vector3.right + rightVertical * Vector3.forward).normalized;
 
@@ -65,7 +71,20 @@ public class PlayerController : MonoBehaviour
             return;
 
         Vector3 gunPosition = transform.position + transform.TransformVector(GunOffset);
-        GameObject bulletObj = Instantiate(ResourceManager.GetPrefab("Bullet"), gunPosition, transform.rotation);
+        Instantiate(ResourceManager.GetPrefab("Bullet"), gunPosition, transform.rotation);
         m_FireTimer = FireCooldown;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (Helpers.CheckObjectTag(collision.gameObject, "AI"))
+        {
+            AI ai = collision.gameObject.GetComponent<AI>();
+            if (ai.IsShrunk)
+            {
+                ai.Die();
+                GetComponent<Player>().Gold += ai.GoldReward;
+            }
+        }
     }
 }

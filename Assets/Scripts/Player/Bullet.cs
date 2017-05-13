@@ -19,5 +19,12 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (Helpers.CheckObjectTag(collision.gameObject, "AI"))
+        {
+            AI ai = collision.gameObject.GetComponent<AI>();
+            ai.TakeDamage(1);
+            Destroy(gameObject);
+        }
     }
 }
