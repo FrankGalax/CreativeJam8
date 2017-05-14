@@ -6,6 +6,7 @@ public class Bomb : MonoBehaviour
 {
     public float ExpandTime = 2.0f;
     public float MaxRadius = 3.0f;
+    public AudioClip SpawnClip;
 
     private float m_Timer;
     private List<GameObject> m_PushBackObjs;
@@ -19,6 +20,7 @@ public class Bomb : MonoBehaviour
     {
         m_Timer = 0;
         m_PushBackObjs = new List<GameObject>();
+        AudioSource.PlayClipAtPoint(SpawnClip, Camera.main.transform.position);
     }
 
     void FixedUpdate()
