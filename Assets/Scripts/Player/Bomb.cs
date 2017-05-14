@@ -38,6 +38,13 @@ public class Bomb : MonoBehaviour
                 Rigidbody rigidbody = p.GetComponent<Rigidbody>();
                 rigidbody.velocity = Vector3.zero;
                 rigidbody.angularVelocity = Vector3.zero;
+                rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+
+                Archetype1 archetype1 = p.GetComponent<Archetype1>();
+                if (archetype1 != null)
+                {
+                    archetype1.Stun();
+                }
             });
             Destroy(gameObject);
         }
@@ -46,6 +53,15 @@ public class Bomb : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (!m_PushBackObjs.Contains(collision.gameObject))
+        {
             m_PushBackObjs.Add(collision.gameObject);
+            bool isAffectedAI = collision.gameObject.GetComponent<Archetype1>() || collision.gameObject.GetComponent<Archetype2>();
+            AI ai = collision.gameObject.GetComponent<AI>();
+            if (isAffectedAI && !ai.IsShrunk)
+            {
+                Rigidbody rigidbody = collision.gameObject.GetComponent<Rigidbody>();
+                rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+            }
+        }
     }
 }
