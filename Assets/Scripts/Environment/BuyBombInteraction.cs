@@ -4,6 +4,7 @@ using UnityEngine;
 public class BuyBombInteraction : MonoBehaviour
 {
     public int Cost;
+    public Texture Texture;
 
     private bool m_PlayerInside;
     private PlayerController m_PlayerController;
@@ -47,6 +48,18 @@ public class BuyBombInteraction : MonoBehaviour
                 player.RemoveGold(Cost);
                 player.Bombs++;
             }
+        }
+    }
+    void OnGUI()
+    {
+        if (Texture != null && WaveManager.Instance.IsCooldown)
+        {
+            int width = 100;
+            int height = 100;
+            Rect rect = new Rect(Camera.main.WorldToScreenPoint(transform.position), new Vector2(100, 100));
+            rect.y = Screen.height - rect.y - height / 2;
+            rect.x -= width / 2;
+            GUI.DrawTexture(rect, Texture);
         }
     }
 }
