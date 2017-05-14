@@ -5,6 +5,7 @@ public class UnshrinkExplosion : MonoBehaviour
 {
     public float MaxRadius = 1.5f;
     public float ExpandTime = 1.0f;
+    public AudioClip AudioClip;
     
     private float m_ExpandTimer;
     private List<Transform> m_AffectedAIs;
@@ -18,6 +19,7 @@ public class UnshrinkExplosion : MonoBehaviour
     {
         m_ExpandTimer = 0.0f;
         m_AffectedAIs = new List<Transform>();
+        AudioSource.PlayClipAtPoint(AudioClip, transform.position);
     }
 
     void FixedUpdate()

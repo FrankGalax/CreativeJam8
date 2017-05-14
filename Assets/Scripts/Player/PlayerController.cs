@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -6,14 +7,26 @@ public class PlayerController : MonoBehaviour
     public Vector3 GunOffset;
     public float FireCooldown = 0.25f;
     public bool PS4;
+    public float ShieldTime = 5.0f;
+    public float DoubleGunTime = 5.0f;
+    public float BombExpandTime = 2.0f;
+    public int GoldPickupAmount = 1;
+    public float CameraShakeTime = 1.0f;
+    public float CameraShakeStrength = 10.0f;
+    public AudioClip ShootClip;
+    public AudioClip PowerUpClip;
 
     public bool IsInteracting { get; private set; }
     private Rigidbody m_Rigidbody;
     private float m_FireTimer;
+    private bool m_Shielded;
+    private bool m_DoubleGun;
 
     void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+        m_Shielded = false;
+        m_DoubleGun = false;
     }
 
     void FixedUpdate()
@@ -26,6 +39,70 @@ public class PlayerController : MonoBehaviour
     {
         UpdateShooting();
         UpdateInteractions();
+        UpdateActions();
+    }
+
+    public void ApplyPowerup(int id)
+    {
+        if (id == 0)
+        {
+            if (!m_Shielded)
+                StartCoroutine(Shield());
+        }
+        else if (id == 1)
+        {
+            if (!m_DoubleGun)
+                StartCoroutine(DoubleGun());
+        }
+        else if (id == 2)
+        {
+            GetComponent<Player>().Gold += GoldPickupAmount;
+        }
+
+        AudioSource.PlayClipAtPoint(PowerUpClip, Camera.main.transform.position);
+    }
+
+    private IEnumerator Shield()
+    {
+        Transform shield = transform.Find("Shield");
+        shield.gameObject.SetActive(true);
+        m_Shielded = true;
+
+        yield return new WaitForSeconds(ShieldTime);
+
+        shield.gameObject.SetActive(false);
+        m_Shielded = false;
+    }
+
+    private IEnumerator DoubleGun()
+    {
+        m_DoubleGun = true;
+
+        yield return new WaitForSeconds(DoubleGunTime);
+
+        m_DoubleGun = false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        GetComponent<Player>().RemoveGold(damage);
+        StartCoroutine(CameraShake());
+    }
+
+    private IEnumerator CameraShake()
+    {
+        float time = 0;
+        Vector3 camPosition = Camera.main.transform.position;
+        
+        while (time < CameraShakeTime)
+        {
+            float angle = time / CameraShakeTime * 6 * Mathf.PI;
+            Vector3 displacement = CameraShakeStrength * new Vector3(Mathf.Sin(angle), Mathf.PerlinNoise(0, angle), 0);
+            Camera.main.transform.position = camPosition + displacement;
+            time += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        Camera.main.transform.position = camPosition;
     }
 
     private void UpdatePosition()
@@ -74,13 +151,41 @@ public class PlayerController : MonoBehaviour
             return;
 
         Vector3 gunPosition = transform.position + transform.TransformVector(GunOffset);
-        Instantiate(ResourceManager.GetPrefab("Bullet"), gunPosition, transform.rotation);
+
+        if (m_DoubleGun)
+        {
+            Vector3 forward = transform.forward;
+            Quaternion rot = Quaternion.AngleAxis(10, Vector3.up);
+            Quaternion invRot = Quaternion.AngleAxis(-10, Vector3.up);
+
+            Instantiate(ResourceManager.GetPrefab("Bullet"), gunPosition, Quaternion.LookRotation(rot * forward));
+            Instantiate(ResourceManager.GetPrefab("Bullet"), gunPosition, Quaternion.LookRotation(invRot * forward));
+        }
+        else
+        {
+            Instantiate(ResourceManager.GetPrefab("Bullet"), gunPosition, transform.rotation);
+        }
+        AudioSource.PlayClipAtPoint(ShootClip, Camera.main.transform.position, 1.0f);
+
         m_FireTimer = FireCooldown;
     }
 
     private void UpdateInteractions()
     {
         IsInteracting = PS4 ? Input.GetButtonDown("Fire2") : Input.GetButtonDown("Fire1");
+    }
+
+    private void UpdateActions()
+    {
+        if (PS4 ? Input.GetButtonDown("Fire3") : Input.GetButtonDown("Fire2"))
+        {
+            Player player = GetComponent<Player>();
+            if (player.Bombs > 0)
+            {
+                player.Bombs--;
+                Instantiate(ResourceManager.GetPrefab("Bomb"), transform.position, Quaternion.identity);
+            }
+        }
     }
 
     void OnCollisionEnter(Collision collision)
