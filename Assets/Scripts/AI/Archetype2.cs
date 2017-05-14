@@ -11,6 +11,8 @@ public class Archetype2 : AI
     public float InAirStunTime = 0.5f;
     public float OnGroundStunTime = 4.0f;
 
+    private Animator m_Animator;
+
     enum State
     {
         Fly,
@@ -25,6 +27,8 @@ public class Archetype2 : AI
     protected override void DoStart()
     {
         m_State = State.Fly;
+        m_Animator = GetComponentInChildren<Animator>();
+        m_Animator.SetBool("Sting", false);
     }
 
     protected override void DoUpdate()
@@ -82,6 +86,7 @@ public class Archetype2 : AI
                 {
                     m_State = State.WaitInAir;
                     m_Timer = InAirStunTime;
+                    m_Animator.SetBool("Sting", true);
                 }
             }
         }
@@ -115,6 +120,7 @@ public class Archetype2 : AI
             m_State = State.OnGround;
             m_Timer = OnGroundStunTime;
             GetComponent<CapsuleCollider>().enabled = true;
+            m_Animator.SetBool("Sting", false);
         }
     }
 
