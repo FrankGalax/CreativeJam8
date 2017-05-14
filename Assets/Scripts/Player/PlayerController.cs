@@ -91,7 +91,18 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator CameraShake()
     {
-        yield return null;
+        float time = 0;
+        Vector3 camPosition = Camera.main.transform.position;
+        
+        while (time < CameraShakeTime)
+        {
+            float angle = time / CameraShakeTime * 6 * Mathf.PI;
+            Vector3 displacement = CameraShakeStrength * new Vector3(Mathf.Sin(angle), Mathf.PerlinNoise(0, angle), 0);
+            Camera.main.transform.position = camPosition + displacement;
+            time += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        Camera.main.transform.position = camPosition;
     }
 
     private void UpdatePosition()
