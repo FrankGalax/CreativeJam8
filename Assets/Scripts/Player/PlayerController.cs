@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public int GoldPickupAmount = 1;
     public float CameraShakeTime = 1.0f;
     public float CameraShakeStrength = 10.0f;
+    public AudioClip ShootClip;
+    public AudioClip PowerUpClip;
 
     public bool IsInteracting { get; private set; }
     private Rigidbody m_Rigidbody;
@@ -56,6 +58,8 @@ public class PlayerController : MonoBehaviour
         {
             GetComponent<Player>().Gold += GoldPickupAmount;
         }
+
+        AudioSource.PlayClipAtPoint(PowerUpClip, Camera.main.transform.position);
     }
 
     private IEnumerator Shield()
@@ -150,6 +154,7 @@ public class PlayerController : MonoBehaviour
         {
             Instantiate(ResourceManager.GetPrefab("Bullet"), gunPosition, transform.rotation);
         }
+        AudioSource.PlayClipAtPoint(ShootClip, Camera.main.transform.position, 1.0f);
 
         m_FireTimer = FireCooldown;
     }

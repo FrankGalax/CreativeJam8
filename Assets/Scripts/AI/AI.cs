@@ -10,6 +10,8 @@ public class AI : MonoBehaviour
     public int GoldReward = 10;
     public float DamageCooldown;
     public int GoldDamage = 5;
+    public AudioClip SpawnClip;
+    public AudioClip KillClip;
 
     protected NavMeshAgent m_NavMeshAgent;
     protected float m_NavMeshSpeed;
@@ -33,6 +35,7 @@ public class AI : MonoBehaviour
         m_IsUpdatingSize = false;
         m_NavMeshSpeed = m_NavMeshAgent != null ? m_NavMeshAgent.speed : 0.0f;
 
+        AudioSource.PlayClipAtPoint(SpawnClip, Camera.main.transform.position);
         DoStart();
     }
     protected virtual void DoStart() { }
@@ -92,6 +95,7 @@ public class AI : MonoBehaviour
     public virtual void Die()
     {
         WaveManager.Instance.AddKill();
+        AudioSource.PlayClipAtPoint(KillClip, Camera.main.transform.position);
         Destroy(gameObject);
     }
 

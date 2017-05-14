@@ -5,10 +5,12 @@ public class Barrier : MonoBehaviour
 {
     public bool Unlocked { get; private set; }
     public float LiftTime = 2.0f;
+    public AudioClip UnlockClip;
 
     public void Unlock()
     {
         Unlocked = true;
+        AudioSource.PlayClipAtPoint(UnlockClip, Camera.main.transform.position);
         StartCoroutine(UnlockAnim());
     }
 
