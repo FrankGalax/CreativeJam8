@@ -87,6 +87,9 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (m_Shielded)
+            return;
+
         GetComponent<Player>().RemoveGold(damage);
         StartCoroutine(CameraShake());
     }
