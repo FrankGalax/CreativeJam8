@@ -19,8 +19,7 @@ public class UnshrinkExplosion : MonoBehaviour
     {
         m_ExpandTimer = 0.0f;
         m_AffectedAIs = new List<Transform>();
-        if (AudioClip != null)
-            AudioSource.PlayClipAtPoint(AudioClip, transform.position);
+        AudioSource.PlayClipAtPoint(AudioClip, transform.position);
     }
 
     void FixedUpdate()
@@ -28,7 +27,7 @@ public class UnshrinkExplosion : MonoBehaviour
         m_ExpandTimer += Time.fixedDeltaTime;
 
         float scale = m_ExpandTimer / ExpandTime * MaxRadius;
-        transform.localScale = new Vector3(scale, scale, scale);
+        transform.localScale = new Vector3(scale, 1, scale);
 
         if (m_ExpandTimer > ExpandTime)
         {
