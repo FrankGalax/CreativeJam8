@@ -21,12 +21,14 @@ public class PlayerController : MonoBehaviour
     private float m_FireTimer;
     private bool m_Shielded;
     private bool m_DoubleGun;
+    private bool m_CameraShake;
 
     void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
         m_Shielded = false;
         m_DoubleGun = false;
+        m_CameraShake = false;
     }
 
     void FixedUpdate()
@@ -91,18 +93,24 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator CameraShake()
     {
-        float time = 0;
-        Vector3 camPosition = Camera.main.transform.position;
-        
-        while (time < CameraShakeTime)
+        if (!m_CameraShake)
         {
-            float angle = time / CameraShakeTime * 6 * Mathf.PI;
-            Vector3 displacement = CameraShakeStrength * new Vector3(Mathf.Sin(angle), Mathf.PerlinNoise(0, angle), 0);
-            Camera.main.transform.position = camPosition + displacement;
-            time += Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
+            m_CameraShake = true;
+
+            float time = 0;
+            Vector3 camPosition = Camera.main.transform.position;
+
+            while (time < CameraShakeTime)
+            {
+                float angle = time / CameraShakeTime * 6 * Mathf.PI;
+                Vector3 displacement = CameraShakeStrength * new Vector3(Mathf.Sin(angle), Mathf.PerlinNoise(0, angle), 0);
+                Camera.main.transform.position = camPosition + displacement;
+                time += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+            Camera.main.transform.position = camPosition;
+            m_CameraShake = false;
         }
-        Camera.main.transform.position = camPosition;
     }
 
     private void UpdatePosition()
