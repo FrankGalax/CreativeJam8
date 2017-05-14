@@ -49,7 +49,14 @@ public class GameUI : MonoBehaviour
             if (isCooldown)
             {
                 m_WaveText.text = FormatTime(WaveManager.Instance.CooldownTimer);
-                m_WaveMessage.text = "Wave " + (WaveManager.Instance.CurrentWave + 1) + " Incoming";
+                if (WaveManager.Instance.IsBossWave)
+                {
+                    m_WaveMessage.text = "Boss Wave Incoming";
+                }
+                else
+                {
+                    m_WaveMessage.text = "Wave " + (WaveManager.Instance.CurrentWave + 1) + " Incoming";
+                }
             }
             else
             {

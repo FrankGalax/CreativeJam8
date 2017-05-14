@@ -4,6 +4,8 @@ using System.Linq;
 
 public class WaveManager : GameSingleton<WaveManager>
 {
+    public int BossWaveGoldRequirement = 75;
+
     private List<Wave> m_Waves;
     private int m_CurrentWave;
 
@@ -24,6 +26,7 @@ public class WaveManager : GameSingleton<WaveManager>
         m_Waves.Add(transform.Find("Wave1").GetComponent<Wave>());
         m_Waves.Add(transform.Find("Wave2").GetComponent<Wave>());
         m_Waves.Add(transform.Find("Wave3").GetComponent<Wave>());
+        m_Waves.Add(transform.Find("Wave4").GetComponent<Wave>());
 
         m_CurrentWave = 0;
         m_State = State.Cooldown;
@@ -65,7 +68,20 @@ public class WaveManager : GameSingleton<WaveManager>
         if (m_AIKills >= m_Waves[m_CurrentWave].AICount)
         {
             m_CurrentWave++;
-            if (m_CurrentWave == m_Waves.Count)
+            if (m_CurrentWave == m_Waves.Count - 1)
+            {
+                if (FindObjectOfType<Player>().Gold >= BossWaveGoldRequirement)
+                {
+                    m_State = State.Cooldown;
+                    m_CooldownTimer = m_Waves[m_CurrentWave].CooldownTime;
+                }
+                else
+                {
+                    m_State = State.End;
+                    End();
+                }
+            }
+            else if (m_CurrentWave == m_Waves.Count)
             {
                 m_State = State.End;
                 End();
@@ -105,4 +121,5 @@ public class WaveManager : GameSingleton<WaveManager>
     public int AICount { get { return m_Waves[m_CurrentWave].AICount; } }
     public int CurrentWave { get { return m_CurrentWave; } }
     public bool IsEnded { get { return m_State == State.End; } }
+    public bool IsBossWave { get { return m_CurrentWave == m_Waves.Count - 1 && !IsEnded; } }
 }

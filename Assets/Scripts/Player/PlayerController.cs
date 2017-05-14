@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip PowerUpClip;
 
     public bool IsInteracting { get; private set; }
+    public bool IsStunned { get; set; }
     private Rigidbody m_Rigidbody;
     private float m_FireTimer;
     private bool m_Shielded;
@@ -29,16 +30,23 @@ public class PlayerController : MonoBehaviour
         m_Shielded = false;
         m_DoubleGun = false;
         m_CameraShake = false;
+        IsStunned = false;
     }
 
     void FixedUpdate()
     {
+        if (IsStunned)
+            return;
+
         UpdatePosition();
         UpdateRotation();
     }
 
     void Update()
     {
+        if (IsStunned)
+            return;
+
         UpdateShooting();
         UpdateInteractions();
         UpdateActions();
@@ -209,6 +217,14 @@ public class PlayerController : MonoBehaviour
                 ai.Die();
                 GetComponent<Player>().Gold += ai.GoldReward;
             }
+        }
+    }
+    void OnTriggerEnter(Collider collider)
+    {
+        StunExplosion stunExplosion = collider.GetComponent<StunExplosion>();
+        if (stunExplosion != null)
+        {
+            stunExplosion.OnPlayerEnter(this);
         }
     }
 }
