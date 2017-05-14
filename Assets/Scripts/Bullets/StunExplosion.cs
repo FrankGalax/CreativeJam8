@@ -9,7 +9,7 @@ public class StunExplosion : MonoBehaviour
     public AudioClip AudioClip;
     public float StunTime = 0.5f;
     public int GoldDamageOnPlayer = 10;
-    public bool ShouldStun;
+    public bool ShouldStun { get; set; }
 
     private float m_ExpandTimer;
     private bool m_AffectedPlayer;

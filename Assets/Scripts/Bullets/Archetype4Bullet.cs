@@ -3,8 +3,7 @@
 public class Archetype4Bullet : Bullet
 {
     public float ExplodeTime = 1.5f;
-    public int GoldDamageOnPlayer = 10;
-    public bool ShouldStun;
+    public bool ShouldStun { get; set; }
     private float m_ExplodeTimer;
 
     protected override void DoStart()
