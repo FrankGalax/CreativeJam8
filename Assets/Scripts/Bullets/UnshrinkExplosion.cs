@@ -19,7 +19,8 @@ public class UnshrinkExplosion : MonoBehaviour
     {
         m_ExpandTimer = 0.0f;
         m_AffectedAIs = new List<Transform>();
-        AudioSource.PlayClipAtPoint(AudioClip, transform.position);
+        if (AudioClip != null)
+            AudioSource.PlayClipAtPoint(AudioClip, transform.position);
     }
 
     void FixedUpdate()
