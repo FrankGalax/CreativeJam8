@@ -1,0 +1,314 @@
+fileFormatVersion: 2
+guid: 577c7514b868c3f40bc164f19b3c5cb1
+timeCreated: 1494765669
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Abdomen
+    100002: Armature
+    100004: ArmBack.L
+    100006: ArmBack.R
+    100008: ArmFront.L
+    100010: ArmFront.R
+    100012: //RootNode
+    100014: Chest
+    100016: ClawBack.L
+    100018: ClawBack.L_end
+    100020: ClawBack.R
+    100022: ClawBack.R_end
+    100024: ClawFront.L
+    100026: ClawFront.L_end
+    100028: ClawFront.R
+    100030: ClawFront.R_end
+    100032: FeetBack.L
+    100034: FeetBack.L_end
+    100036: FeetBack.R
+    100038: FeetBack.R_end
+    100040: FeetFront.L
+    100042: FeetFront.L_end
+    100044: FeetFront.R
+    100046: FeetFront.R_end
+    100048: ForearmBack.L
+    100050: ForearmBack.R
+    100052: ForearmFront.L
+    100054: ForearmFront.R
+    100056: HipBack.L
+    100058: HipBack.R
+    100060: HipFront.L
+    100062: HipFront.R
+    100064: Horn
+    100066: Horn_end
+    100068: LegBack.L
+    100070: LegBack.R
+    100072: LegFront.L
+    100074: LegFront.R
+    100076: Merged_PM3D_Sphere3D_12
+    100078: Merged_PM3D_Sphere3D_12_copy1
+    100080: Plane
+    100082: Root
+    100084: Shell
+    100086: Shell_end
+    100088: ShoulderBack.L
+    100090: ShoulderBack.R
+    100092: ShoulderFront.L
+    100094: ShoulderFront.R
+    400000: Abdomen
+    400002: Armature
+    400004: ArmBack.L
+    400006: ArmBack.R
+    400008: ArmFront.L
+    400010: ArmFront.R
+    400012: //RootNode
+    400014: Chest
+    400016: ClawBack.L
+    400018: ClawBack.L_end
+    400020: ClawBack.R
+    400022: ClawBack.R_end
+    400024: ClawFront.L
+    400026: ClawFront.L_end
+    400028: ClawFront.R
+    400030: ClawFront.R_end
+    400032: FeetBack.L
+    400034: FeetBack.L_end
+    400036: FeetBack.R
+    400038: FeetBack.R_end
+    400040: FeetFront.L
+    400042: FeetFront.L_end
+    400044: FeetFront.R
+    400046: FeetFront.R_end
+    400048: ForearmBack.L
+    400050: ForearmBack.R
+    400052: ForearmFront.L
+    400054: ForearmFront.R
+    400056: HipBack.L
+    400058: HipBack.R
+    400060: HipFront.L
+    400062: HipFront.R
+    400064: Horn
+    400066: Horn_end
+    400068: LegBack.L
+    400070: LegBack.R
+    400072: LegFront.L
+    400074: LegFront.R
+    400076: Merged_PM3D_Sphere3D_12
+    400078: Merged_PM3D_Sphere3D_12_copy1
+    400080: Plane
+    400082: Root
+    400084: Shell
+    400086: Shell_end
+    400088: ShoulderBack.L
+    400090: ShoulderBack.R
+    400092: ShoulderFront.L
+    400094: ShoulderFront.R
+    2300000: Plane
+    3300000: Plane
+    4300000: Plane
+    4300002: Merged_PM3D_Sphere3D_12
+    4300004: Merged_PM3D_Sphere3D_12_copy1
+    7400000: Walk
+    7400002: Plane|PlaneAction
+    7400004: Plane|Run
+    7400006: Armature|ArmatureAction
+    7400008: Armature|PlaneAction
+    7400010: Armature|Run
+    7400012: Armature|Walk
+    7400014: Merged_PM3D_Sphere3D_12|PlaneAction
+    7400016: Merged_PM3D_Sphere3D_12|Run
+    7400018: Merged_PM3D_Sphere3D_12_copy1|PlaneAction
+    7400020: Merged_PM3D_Sphere3D_12_copy1|Run
+    9500000: //RootNode
+    13700000: Merged_PM3D_Sphere3D_12
+    13700002: Merged_PM3D_Sphere3D_12_copy1
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Walk
+      takeName: Walk
+      firstFrame: 0
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/Abdomen
+        weight: 1
+      - path: Armature/Root/Abdomen/HipBack.L
+        weight: 1
+      - path: Armature/Root/Abdomen/HipBack.L/LegBack.L
+        weight: 1
+      - path: Armature/Root/Abdomen/HipBack.L/LegBack.L/FeetBack.L
+        weight: 1
+      - path: Armature/Root/Abdomen/HipBack.L/LegBack.L/FeetBack.L/FeetBack.L_end
+        weight: 1
+      - path: Armature/Root/Abdomen/HipBack.R
+        weight: 1
+      - path: Armature/Root/Abdomen/HipBack.R/LegBack.R
+        weight: 1
+      - path: Armature/Root/Abdomen/HipBack.R/LegBack.R/FeetBack.R
+        weight: 1
+      - path: Armature/Root/Abdomen/HipBack.R/LegBack.R/FeetBack.R/FeetBack.R_end
+        weight: 1
+      - path: Armature/Root/Abdomen/HipFront.L
+        weight: 1
+      - path: Armature/Root/Abdomen/HipFront.L/LegFront.L
+        weight: 1
+      - path: Armature/Root/Abdomen/HipFront.L/LegFront.L/FeetFront.L
+        weight: 1
+      - path: Armature/Root/Abdomen/HipFront.L/LegFront.L/FeetFront.L/FeetFront.L_end
+        weight: 1
+      - path: Armature/Root/Abdomen/HipFront.R
+        weight: 1
+      - path: Armature/Root/Abdomen/HipFront.R/LegFront.R
+        weight: 1
+      - path: Armature/Root/Abdomen/HipFront.R/LegFront.R/FeetFront.R
+        weight: 1
+      - path: Armature/Root/Abdomen/HipFront.R/LegFront.R/FeetFront.R/FeetFront.R_end
+        weight: 1
+      - path: Armature/Root/Chest
+        weight: 1
+      - path: Armature/Root/Chest/Horn
+        weight: 1
+      - path: Armature/Root/Chest/Horn/Horn_end
+        weight: 1
+      - path: Armature/Root/Chest/Shell
+        weight: 1
+      - path: Armature/Root/Chest/Shell/Shell_end
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderBack.L
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderBack.L/ArmBack.L
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderBack.L/ArmBack.L/ForearmBack.L
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderBack.L/ArmBack.L/ForearmBack.L/ClawBack.L
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderBack.L/ArmBack.L/ForearmBack.L/ClawBack.L/ClawBack.L_end
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderBack.R
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderBack.R/ArmBack.R
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderBack.R/ArmBack.R/ForearmBack.R
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderBack.R/ArmBack.R/ForearmBack.R/ClawBack.R
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderBack.R/ArmBack.R/ForearmBack.R/ClawBack.R/ClawBack.R_end
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderFront.L
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderFront.L/ArmFront.L
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderFront.L/ArmFront.L/ForearmFront.L
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderFront.L/ArmFront.L/ForearmFront.L/ClawFront.L
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderFront.L/ArmFront.L/ForearmFront.L/ClawFront.L/ClawFront.L_end
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderFront.R
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderFront.R/ArmFront.R
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderFront.R/ArmFront.R/ForearmFront.R
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderFront.R/ArmFront.R/ForearmFront.R/ClawFront.R
+        weight: 1
+      - path: Armature/Root/Chest/ShoulderFront.R/ArmFront.R/ForearmFront.R/ClawFront.R/ClawFront.R_end
+        weight: 1
+      - path: Merged_PM3D_Sphere3D_12
+        weight: 1
+      - path: Merged_PM3D_Sphere3D_12_copy1
+        weight: 1
+      - path: Plane
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
