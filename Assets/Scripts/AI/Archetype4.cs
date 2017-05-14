@@ -7,6 +7,7 @@ public class Archetype4 : AI
     public float EnragedFireCooldown = 2.0f;
     public Vector3 GunOffset;
     public float EnragedNavMeshSpeed = 3.0f;
+    public AudioClip EnrageClip;
 
     enum State
     {
@@ -31,6 +32,7 @@ public class Archetype4 : AI
                 m_State = State.Enraged;
                 m_FireTimer = 0;
                 m_NavMeshAgent.speed = EnragedNavMeshSpeed;
+                AudioSource.PlayClipAtPoint(EnrageClip, Camera.main.transform.position);
             }
         }
 
