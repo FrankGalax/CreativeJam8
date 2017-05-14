@@ -17,12 +17,14 @@ public class PlayerController : MonoBehaviour
     public AudioClip PowerUpClip;
 
     public bool IsInteracting { get; private set; }
-    public bool IsStunned { get; set; }
+
     private Rigidbody m_Rigidbody;
     private float m_FireTimer;
     private bool m_Shielded;
     private bool m_DoubleGun;
     private bool m_CameraShake;
+    private float m_StunTimer;
+    private bool m_IsStunned;
 
     void Awake()
     {
@@ -30,12 +32,12 @@ public class PlayerController : MonoBehaviour
         m_Shielded = false;
         m_DoubleGun = false;
         m_CameraShake = false;
-        IsStunned = false;
+        m_IsStunned = false;
     }
 
     void FixedUpdate()
     {
-        if (IsStunned)
+        if (m_IsStunned)
             return;
 
         UpdatePosition();
@@ -44,8 +46,16 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (IsStunned)
+        if (m_IsStunned)
+        {
+            m_StunTimer -= Time.deltaTime;
+            if (m_StunTimer < 0)
+            {
+                m_IsStunned = false;
+                m_StunTimer = 0;
+            }
             return;
+        }
 
         UpdateShooting();
         UpdateInteractions();
@@ -100,6 +110,16 @@ public class PlayerController : MonoBehaviour
 
         GetComponent<Player>().RemoveGold(damage);
         StartCoroutine(CameraShake());
+    }
+
+    public void Stun(int damage, float stunTime)
+    {
+        if (m_IsStunned || m_Shielded)
+            return;
+
+        TakeDamage(damage);
+        m_StunTimer = stunTime;
+        m_IsStunned = true;
     }
 
     private IEnumerator CameraShake()

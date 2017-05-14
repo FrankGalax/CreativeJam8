@@ -22,7 +22,7 @@ public class Archetype4Bullet : Bullet
 
     protected override void DoOnCollisionEnter(Collision collision)
     {
-        if (!Helpers.CheckObjectTag(collision.gameObject, "AI") && collision.gameObject.GetComponent<Archetype4Bullet>() == null)
+        if (!Helpers.CheckObjectTag(collision.gameObject, "AI") && collision.gameObject.GetComponent<Bullet>() == null)
         {
             Explode();
         }

@@ -47,22 +47,11 @@ public class StunExplosion : MonoBehaviour
         m_AffectedPlayer = true;
         if (ShouldStun)
         {
-            StartCoroutine(StunPlayer(playerController));
+            playerController.Stun(GoldDamageOnPlayer, StunTime);
         }
         else
         {
             playerController.TakeDamage(GoldDamageOnPlayer);
-        }
-    }
-
-    private IEnumerator StunPlayer(PlayerController playerController)
-    {
-        if (!playerController.IsStunned)
-        {
-            playerController.TakeDamage(GoldDamageOnPlayer);
-            playerController.IsStunned = true;
-            yield return new WaitForSeconds(StunTime);
-            playerController.IsStunned = false;
         }
     }
 }
